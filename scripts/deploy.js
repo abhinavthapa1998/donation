@@ -14,13 +14,14 @@ async function consoleBalances(addresses) {
   let counter = 0;
   for (const address of addresses) {
     console.log(`Address ${counter} balance:`, await getBalances(address));
+    counter++;
   }
 }
 async function consoleMemos(memos) {
   for (const memo of memos) {
     const timestamp = memo.timestamp;
     const name = memo.name;
-    const from = memo.address;
+    const from = memo.from;
     const message = memo.message;
     console.log(
       `At ${timestamp}, name ${name}, address ${from}, message ${message}`
@@ -47,6 +48,9 @@ async function main() {
 
   console.log("After Buying Coffee");
   await consoleBalances(addresses);
+
+  const memos = await contract.getMemos();
+  consoleMemos(memos);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
